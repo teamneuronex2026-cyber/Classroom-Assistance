@@ -1,7 +1,7 @@
 import os
 import speech_recognition as sr
 from gtts import gTTS
-import google.generativeai as genai
+from google import genai
 import subprocess
 from dotenv import load_dotenv
 
