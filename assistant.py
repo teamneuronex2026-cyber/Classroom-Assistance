@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure your Gemini API Key
-
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.5-flash")
+# Initialize the Gemini Client
+# The client automatically loads the GEMINI_API_KEY from your .env file via os.environ
+client = genai.Client()
+MODEL_ID = "gemini-2.5-flash"
 
 def speak(text):
     print(f"[Assistant]: {text}")
@@ -42,8 +42,11 @@ def listen_loop():
                     speak("Shutting down assistant. Goodbye!")
                     break
 
-                # Query Google Gemini
-                response = model.generate_content(user_query)
+                # Query Google Gemini using the new SDK syntax
+                response = client.models.generate_content(
+                    model=MODEL_ID,
+                    contents=user_query,
+                )
                 ai_reply = response.text
                 
                 speak(ai_reply)
